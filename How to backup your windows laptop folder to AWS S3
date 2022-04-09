@@ -1,0 +1,92 @@
+I believe most of people use Windows OS Laptop rather than Linux(Mac OS). When your Laptop crashed! You should definitely be mad of the data on your laptop, if you didn't backup the data in advanced.
+Today, cloud storage is used everywhere, follow me and drop your traditional hardware drive backing up solution.
+Choose AWS S3 to easily and backup your laptop data to Cloud.
+
+# What do you need to prepare
+- AWS Account
+- Windows Laptop
+
+1. Create an IAM user called "laptop-backup" in your AWS Account
+   Select "IAM Service"
+   Click "Users"
+   Add users, name it "laptop-backup"
+   Tick "Access key - Programmatic access", if you also want to login it AWS Account with this user you can alos tick "Password - AWS Management Console access"
+   Next, Add this user into a group, you can choose to create a groupt, name it as "laptop-backup"
+   Select "AmazonS3FullAccess" policy for this group
+   Add tags for this group, it's optional
+   Next, Review your configuration
+   Next, Create user
+   You will get the AWS Access Key and Secret Access Key, which will be used to configure AWS CLI
+   
+   More details, please refer:
+   https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
+   
+2. Install AWS CLI in your windows Laptop
+   
+   Download the appropriate MSI installer:
+   AWS CLI MSI installer for Windows (64-bit): https://s3.amazonaws.com/aws-cli/AWSCLI64PY3.msi
+   AWS CLI MSI installer for Windows (32-bit): https://s3.amazonaws.com/aws-cli/AWSCLI32PY3.msi
+   AWS CLI combined setup file for Windows: https://s3.amazonaws.com/aws-cli/AWSCLISetup.exe (includes both the 32-bit and 64-bit MSI installers, and automatically installs the correct version)
+   
+   Run the downloaded MSI installer or the setup file.
+   Follow the on-screen instructions. By default, the AWS CLI version 1 installs to C:\Program Files\Amazon\AWSCLI (64-bit version) or C:\Program Files (x86)\Amazon\AWSCLI (32-bit version). 
+   
+   To confirm the installation, use the aws --version command at a command prompt (open the Start menu and search for cmd to start a command prompt).
+   C:\> aws --version
+   aws-cli/1.22.23 Python/3.8.8 Windows/10 botocore/1.13
+   
+   More details, please refer:
+   https://docs.aws.amazon.com/cli/v1/userguide/install-windows.html
+   
+3. Configure your AWS CLI
+   For general use, the aws configure command is the fastest way to set up your AWS CLI installation. When you enter this command, the AWS CLI prompts you for four pieces of information: 
+    Access key ID
+    Secret access key
+    AWS Region
+    Output format
+   
+   Open your CMD Terminal(Called Command Prompt)
+   $ aws configure
+   AWS Access Key ID [None]: Input the Key ID you got
+   AWS Secret Access Key [None]: Input the Access Key you got
+   Default region name [None]: Choose you S3 Region
+   Default output format [None]: json
+
+ 4. Creat a batch file in your Desktop(put this file into a file, since you need to run this batch file later)
+    What is batch file? https://en.wikipedia.org/wiki/Batch_file
+ 
+    you can create a laptops3backup.txt file
+    add the following line:
+    aws s3 sync D:/your-folder-path s3://your-bucket-name
+    save it and change the suffix from .txt to .bat
+ 
+ 5. Click the laptops3backup.bat file you created
+    You wil see the uploading workloads
+    Login in your AWS S3 Bucket, your file will be there.
+ 
+ 6. Leverage Windows Task Scheduler to automatically backup
+    Search "Task Scheduler"
+    Create a Task
+    Create an Action in this Task
+    In this Program/script part, browse and load the laptops3backup.bat you created
+    Create a Trigger in this Task
+
+Done
+    
+    
+    
+    
+    
+    
+ 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
